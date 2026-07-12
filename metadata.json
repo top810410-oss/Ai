@@ -1,0 +1,6 @@
+{
+  "name": "Hercules AI App Studio",
+  "description": "An AI-powered automatic application creation platform that builds full-stack interactive business tools, databases, and dashboards from natural language prompts.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
