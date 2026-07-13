@@ -5,7 +5,7 @@ WORKDIR /app
 
 # 複製依賴宣告並安裝
 COPY package*.json ./
-RUN npm ci
+RUN npm install --legacy-peer-deps
 
 # 複製專案代碼
 COPY . .
@@ -21,7 +21,7 @@ WORKDIR /app
 
 # 僅安裝生產環境所需的套件 (排除開發依賴)
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm install --only=production --legacy-peer-deps
 
 # 從編譯階段複製建置成果
 COPY --from=builder /app/dist ./dist
