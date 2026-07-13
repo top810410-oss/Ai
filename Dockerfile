@@ -1,5 +1,5 @@
-# 使用輕量 Node.js 映像檔
-FROM node:20-slim AS builder
+# 階段一：編譯階段 (使用完整 Node.js 20 映像檔，避免缺少系統建置工具)
+FROM node:20 AS builder
 
 WORKDIR /app
 
@@ -14,14 +14,14 @@ COPY . .
 ENV NODE_ENV=production
 RUN npm run build
 
-# 階段二：生產環境運行
-FROM node:20-slim AS runner
+# 階段二：生產環境運行 (使用完整 Node.js 20 映像檔，確保運行時環境完全一致)
+FROM node:20 AS runner
 
 WORKDIR /app
 
-# 僅安裝生產環境所需的套件 (排除開發依賴)
+# 僅安裝生產環境所需的套件 (排除開發依賴，使用現代的 --omit=dev)
 COPY package*.json ./
-RUN npm install --only=production --legacy-peer-deps
+RUN npm install --omit=dev --legacy-peer-deps
 
 # 從編譯階段複製建置成果
 COPY --from=builder /app/dist ./dist
